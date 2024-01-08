@@ -34,7 +34,7 @@ const ChatArea = () => {
       );
       console.log("chat started");
     }
-  }, []);
+  }, [chat, model]);
 
   async function chatting() {
     setHistory((oldHistory) => [
