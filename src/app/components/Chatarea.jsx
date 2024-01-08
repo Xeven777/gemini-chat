@@ -1,14 +1,15 @@
 "use client";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Send, Trash } from "lucide-react";
 import Image from "next/image";
 const { markdownToTxt } = require("markdown-to-txt");
 
 const ChatArea = () => {
+  const messagesEndRef = useRef(null);
   const [input, setinput] = useState("");
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([
     {
       role: "model",
@@ -21,47 +22,63 @@ const ChatArea = () => {
   const [chat, setchat] = useState(null);
 
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [history]);
   useEffect(() => {
     // the moment i felt , im the GOD
     if (!chat) {
       setchat(
         model.startChat({
           generationConfig: {
-            maxOutputTokens: 500,
+            maxOutputTokens: 300,
           },
         })
       );
-      console.log("chat started");
     }
   }, [chat, model]);
 
   async function chatting() {
+    setLoading(true);
     setHistory((oldHistory) => [
       ...oldHistory,
       {
         role: "user",
         parts: input,
       },
+      {
+        role: "model",
+        parts: "Thinking...",
+      },
     ]);
-    setloading(true);
     setinput("");
     try {
       const result = await chat.sendMessage(input);
       const response = await result.response;
-      console.log(response.candidates[0].content.role);
       const text = markdownToTxt(response.text());
-      setloading(false);
-      setHistory((oldHistory) => [
-        ...oldHistory,
-        {
+      setLoading(false);
+      setHistory((oldHistory) => {
+        const newHistory = oldHistory.slice(0, oldHistory.length - 1);
+        newHistory.push({
           role: "model",
           parts: text,
-        },
-      ]);
+        });
+        return newHistory;
+      });
     } catch (error) {
+      setHistory((oldHistory) => {
+        const newHistory = oldHistory.slice(0, oldHistory.length - 1);
+        newHistory.push({
+          role: "model",
+          parts: "Oops! Something went wrong.",
+        });
+        return newHistory;
+      });
+      setLoading(false);
       console.log(error);
-      setloading(false);
+      alert("Oops! Something went wrong.");
     }
   }
 
@@ -83,8 +100,8 @@ const ChatArea = () => {
   }
 
   return (
-    <div className="relative flex justify-center px-2 max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen">
-      <div className="flex text-sm md:text-base flex-col my-16 w-full flex-grow flex-1 overflow-y-scroll">
+    <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-700">
+      <div className="flex text-sm md:text-base flex-col my-16 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-scroll">
         {history.map((item, index) => (
           <div
             key={index}
@@ -93,7 +110,7 @@ const ChatArea = () => {
             }`}
           >
             <div className="chat-image avatar">
-              <div className="w-[22px] md:w-10 rounded-full">
+              <div className="w-6 md:w-10 rounded-full">
                 <Image
                   alt="o"
                   src={item.role === "model" ? "/geminis.jpeg" : "/user.jpg"}
@@ -114,6 +131,7 @@ const ChatArea = () => {
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="absolute px-2 bottom-2 w-full flex gap-1">
@@ -135,11 +153,19 @@ const ChatArea = () => {
           className="textarea textarea-primary w-full mx-auto bg-opacity-70 font-medium shadow rounded-3xl"
         />
         <button
-          className="btn btn-primary rounded-3xl"
+          className={`btn rounded-3xl ${
+            loading
+              ? "btn-accent cursor-wait pointer-events-none"
+              : "btn-primary"
+          }`}
           title="send"
           onClick={chatting}
         >
-          <Send />
+          {loading ? (
+            <span className="loading loading-spinner loading-sm"></span>
+          ) : (
+            <Send />
+          )}
         </button>
       </div>
     </div>
