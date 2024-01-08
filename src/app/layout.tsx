@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GeminiPRO Chat AI",
+  title: "Gemini PRO chatbot",
   description: "Chat with Gemini Pro AI",
   manifest: "/manifest.json",
   metadataBase: new URL("https://gemini-chatbot.netlify.app/"),

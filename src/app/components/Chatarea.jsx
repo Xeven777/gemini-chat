@@ -153,7 +153,7 @@ const ChatArea = () => {
           className="textarea backdrop-blur textarea-primary w-full mx-auto bg-opacity-60 font-medium shadow rounded-3xl"
         />
         <button
-          className={`btn rounded-3xl ${
+          className={`btn rounded-3xl shadow-md ${
             loading
               ? "btn-accent cursor-wait pointer-events-none"
               : "btn-primary"
