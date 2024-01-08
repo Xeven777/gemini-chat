@@ -100,8 +100,8 @@ const ChatArea = () => {
   }
 
   return (
-    <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-700">
-      <div className="flex text-sm md:text-base flex-col my-6 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-auto">
+    <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-900">
+      <div className="flex text-sm md:text-base flex-col pt-10 pb-16 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-auto">
         {history.map((item, index) => (
           <div
             key={index}
@@ -136,7 +136,7 @@ const ChatArea = () => {
 
       <div className="absolute px-2 bottom-2 w-full flex gap-1">
         <button
-          className="btn btn-outline btn-error rounded-3xl"
+          className="btn btn-outline btn-error rounded-3xl backdrop-blur"
           title="send"
           onClick={reset}
         >
@@ -150,7 +150,7 @@ const ChatArea = () => {
           onKeyDown={handleKeyDown}
           onChange={(e) => setinput(e.target.value)}
           placeholder="Start Chatting..."
-          className="textarea textarea-primary w-full mx-auto bg-opacity-70 font-medium shadow rounded-3xl"
+          className="textarea backdrop-blur textarea-primary w-full mx-auto bg-opacity-60 font-medium shadow rounded-3xl"
         />
         <button
           className={`btn rounded-3xl ${
