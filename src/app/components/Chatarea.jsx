@@ -2,7 +2,8 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import React, { useState, useEffect } from "react";
-import { Send } from "lucide-react";
+import { Send, Trash } from "lucide-react";
+import Image from "next/image";
 const { markdownToTxt } = require("markdown-to-txt");
 
 const ChatArea = () => {
@@ -14,7 +15,6 @@ const ChatArea = () => {
       parts: "Great to meet you. Im Gemini, your chatbot.",
     },
   ]);
-  const [text, settext] = useState("");
   const genAI = new GoogleGenerativeAI(
     "AIzaSyCRE7nLlAa49i-3UfEOVcMbnZLCI2xdTE0"
   );
@@ -36,7 +36,7 @@ const ChatArea = () => {
     }
   }, []);
 
-  async function run() {
+  async function chatting() {
     setHistory((oldHistory) => [
       ...oldHistory,
       {
@@ -59,28 +59,55 @@ const ChatArea = () => {
           parts: text,
         },
       ]);
-      settext(text);
-      console.log(text);
     } catch (error) {
       console.log(error);
       setloading(false);
-      settext("Oops, Error occured.");
     }
   }
 
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      chatting();
+    }
+  }
+
+  function reset() {
+    setHistory([
+      {
+        role: "model",
+        parts: "Great to meet you. Im Gemini, your chatbot.",
+      },
+    ]);
+    setinput("");
+    setchat(null);
+  }
+
   return (
-    <div className="relative flex justify-center max-w-3xl border min-h-dvh overflow-y-scroll w-full pt-5 bg-slate-800 rounded-t-3xl">
-      <div className="border flex flex-col my-16 w-full flex-grow flex-1 max-h-dvh">
+    <div className="relative flex justify-center px-2 max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen">
+      <div className="flex text-sm md:text-base flex-col my-16 w-full flex-grow flex-1 overflow-y-scroll">
         {history.map((item, index) => (
           <div
             key={index}
-            className={`flex border border-red-400 flex-col ${
-              item.role === "model" ? "items-start" : "items-end"
+            className={`chat ${
+              item.role === "model" ? "chat-start" : "chat-end"
             }`}
           >
+            <div className="chat-image avatar">
+              <div className="w-[22px] md:w-10 rounded-full">
+                <Image
+                  alt="o"
+                  src={item.role === "model" ? "/geminis.jpeg" : "/user.jpg"}
+                  width={50}
+                  height={50}
+                />
+              </div>
+            </div>
+            <div className="chat-header mx-2 font-semibold opacity-80">
+              {item.role === "model" ? "Gemini" : "You"}
+            </div>
             <div
-              className={`bg-slate-700 border border-yellow-400 rounded-3xl p-4 max-w-3xl ${
-                item.role === "model" ? "text-left" : "text-right"
+              className={`chat-bubble font-medium ${
+                item.role === "model" ? "chat-bubble-primary" : ""
               }`}
             >
               {item.parts}
@@ -88,18 +115,29 @@ const ChatArea = () => {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-2 w-full flex">
-        <input
+
+      <div className="absolute px-2 bottom-2 w-full flex gap-1">
+        <button
+          className="btn btn-outline btn-error rounded-3xl"
+          title="send"
+          onClick={reset}
+        >
+          <Trash />
+        </button>
+        <textarea
           type="text"
           value={input}
+          required
+          rows={1}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setinput(e.target.value)}
           placeholder="Start Chatting..."
-          className="input input-bordered w-full mx-auto bg-opacity-70 backdrop-blur shadow"
+          className="textarea textarea-primary w-full mx-auto bg-opacity-70 font-medium shadow rounded-3xl"
         />
         <button
           className="btn btn-primary rounded-3xl"
           title="send"
-          onClick={run}
+          onClick={chatting}
         >
           <Send />
         </button>
