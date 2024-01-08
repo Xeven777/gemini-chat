@@ -101,7 +101,7 @@ const ChatArea = () => {
 
   return (
     <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-700">
-      <div className="flex text-sm md:text-base flex-col my-16 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-scroll">
+      <div className="flex text-sm md:text-base flex-col my-6 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-auto">
         {history.map((item, index) => (
           <div
             key={index}
