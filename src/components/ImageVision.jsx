@@ -13,9 +13,7 @@ const ImageVision = () => {
   const [text, settext] = useState(
     "Hola ! I am Gemini. Pick an image and ask a question!"
   );
-  const genAI = new GoogleGenerativeAI(
-    "AIzaSyCRE7nLlAa49i-3UfEOVcMbnZLCI2xdTE0"
-  );
+  const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_APIKEY);
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });

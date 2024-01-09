@@ -16,9 +16,7 @@ const ChatArea = () => {
       parts: "Great to meet you. Im Gemini, your chatbot.",
     },
   ]);
-  const genAI = new GoogleGenerativeAI(
-    "AIzaSyCRE7nLlAa49i-3UfEOVcMbnZLCI2xdTE0"
-  );
+  const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_APIKEY);
   const [chat, setchat] = useState(null);
 
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
