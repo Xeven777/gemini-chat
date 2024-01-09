@@ -1,11 +1,21 @@
 "use client";
 import { Bot, Eye } from "lucide-react";
-import React from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Swap = () => {
   const router = useRouter();
-  const [isChecked, setIsChecked] = React.useState(false);
+  const pathname = usePathname();
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    if (pathname === "/") {
+      setIsChecked(false);
+    } else {
+      setIsChecked(true);
+    }
+  }, [pathname]);
 
   function swap() {
     setIsChecked(!isChecked);
@@ -17,7 +27,7 @@ const Swap = () => {
   }
   return (
     <div>
-      <label className="btn btn-outline backdrop-blur bg-gray-800/10 rounded-3xl swap swap-rotate z-50 fixed top-2 right-1 md:right-52 shadow-md shadow-slate-800">
+      <label className="btn-sm btn btn-circle btn-outline backdrop-blur bg-gray-800/10 rounded-3xl swap swap-rotate z-50 fixed top-4 right-1 sm:right-16 md:right-52 shadow-md shadow-slate-800">
         <input
           type="checkbox"
           aria-label="Swap"

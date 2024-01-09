@@ -79,7 +79,7 @@ const ImageVision = () => {
   }
 
   return (
-    <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-900">
+    <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-6 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-900">
       <div className="flex text-sm md:text-base flex-col pt-10 pb-16 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-auto">
         <div className="chat chat-start">
           <div className="chat-image avatar">
