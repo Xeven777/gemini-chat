@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import Swap from "@/components/Swap";
 
 export const metadata: Metadata = {
-  title: "Gemini PRO chatbot",
+  title: "Gemini PRO",
   description: "Chat with Gemini Pro AI",
   manifest: "/manifest.json",
   metadataBase: new URL("https://gemini-chatbot.netlify.app/"),
@@ -46,7 +47,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Swap />
+        {children}
+      </body>
     </html>
   );
 }

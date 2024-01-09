@@ -10,7 +10,9 @@ const ImageVision = () => {
   const messagesEndRef = useRef(null);
   const [input, setinput] = useState("");
   const [loading, setloading] = useState(false);
-  const [text, settext] = useState("Hola ! I am Gemini. Pick an image and ask a question!");
+  const [text, settext] = useState(
+    "Hola ! I am Gemini. Pick an image and ask a question!"
+  );
   const genAI = new GoogleGenerativeAI(
     "AIzaSyCRE7nLlAa49i-3UfEOVcMbnZLCI2xdTE0"
   );
@@ -19,6 +21,7 @@ const ImageVision = () => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [text]);
+
   async function fileToGenerativePart(file) {
     const base64EncodedDataPromise = new Promise((resolve) => {
       const reader = new FileReader();
@@ -39,7 +42,7 @@ const ImageVision = () => {
 
   async function run() {
     const fileInputEl = document.querySelector("input[type=file]");
-
+    setinput("");
     if (fileInputEl && fileInputEl.files.length > 0) {
       setloading(true);
       try {
@@ -78,25 +81,24 @@ const ImageVision = () => {
   return (
     <div className="relative flex px-2 justify-center max-w-3xl min-h-dvh w-full pt-5 bg-gray-900 rounded-t-3xl max-h-screen shadow shadow-slate-900">
       <div className="flex text-sm md:text-base flex-col pt-10 pb-16 w-full flex-grow flex-1 rounded-3xl shadow-md overflow-y-auto">
-        {loading ? (
-          <div>
-            <span className="loading loading-spinner text-info loading-lg"></span>
-          </div>
-        ) : (
-          <div className="chat chat-start">
-            <div className="chat-image avatar">
-              <div className="w-6 md:w-10 rounded-full">
-                <Image alt="o" src="/geminis.jpeg" width={50} height={50} />
-              </div>
-            </div>
-            <div className="chat-header mx-2 font-semibold opacity-80">
-              Gemini
-            </div>
-            <div className="chat-bubble font-medium chat-bubble-primary">
-              {text}
+        <div className="chat chat-start">
+          <div className="chat-image avatar">
+            <div className="w-6 md:w-10 rounded-full">
+              <Image alt="o" src="/geminis.jpeg" width={50} height={50} />
             </div>
           </div>
-        )}
+          <div className="chat-header mx-2 font-semibold opacity-80">
+            Gemini
+          </div>
+          <div className="chat-bubble font-medium chat-bubble-primary">
+            {loading ? (
+              <span className="loading loading-dots loading-md"></span>
+            ) : (
+              text
+            )}
+          </div>
+        </div>
+
         <div ref={messagesEndRef} />
       </div>
 
