@@ -136,7 +136,7 @@ const ChatArea = () => {
 
       <div className="absolute px-2 bottom-2 w-full flex gap-1">
         <button
-          className="btn btn-outline btn-error rounded-3xl backdrop-blur"
+          className="btn btn-outline shadow-md btn-error rounded-3xl backdrop-blur"
           title="send"
           onClick={reset}
         >
