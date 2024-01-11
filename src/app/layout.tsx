@@ -6,10 +6,10 @@ export const metadata: Metadata = {
   title: "Gemini PRO",
   description: "Chat with Gemini Pro AI",
   manifest: "/manifest.json",
-  metadataBase: new URL("https://gemini-chatbot.netlify.app/"),
+  metadataBase: new URL("https://geminix-pro.vercel.app/"),
   openGraph: {
     type: "website",
-    url: "https://gemini-chatbot.netlify.app/",
+    url: "https://geminix-pro.vercel.app/",
     title: "GeminiPRO Chat AI",
 
     description: "Chat with Gemini Pro AI",
