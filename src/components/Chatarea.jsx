@@ -31,7 +31,7 @@ const ChatArea = () => {
       setchat(
         model.startChat({
           generationConfig: {
-            maxOutputTokens: 300,
+            maxOutputTokens: 400,
           },
         })
       );
