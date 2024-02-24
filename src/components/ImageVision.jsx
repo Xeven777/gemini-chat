@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import { Send, ImagePlus } from "lucide-react";
-const { markdownToTxt } = require("markdown-to-txt");
+import Markdown from "react-markdown";
 
 const ImageVision = () => {
   const messagesEndRef = useRef(null);
@@ -58,7 +58,7 @@ const ImageVision = () => {
         for await (const chunk of result.stream) {
           const chunkText = chunk.text();
           newText += chunkText;
-          settext(markdownToTxt(newText));
+          settext(newText);
         }
       } catch (error) {
         console.log(error);
@@ -92,7 +92,7 @@ const ImageVision = () => {
             {loading ? (
               <span className="loading loading-dots loading-md"></span>
             ) : (
-              text
+              <Markdown>{text}</Markdown>
             )}
           </div>
         </div>
