@@ -1,10 +1,10 @@
 "use client";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import Markdown from "react-markdown";
 import { useState, useEffect, useRef } from "react";
 import { Send, Trash } from "lucide-react";
 import Image from "next/image";
-const { markdownToTxt } = require("markdown-to-txt");
 
 const ChatArea = () => {
   const messagesEndRef = useRef(null);
@@ -26,7 +26,7 @@ const ChatArea = () => {
     }
   }, [history]);
   useEffect(() => {
-    // the moment i felt , im the GOD
+    // the moment I felt , Im the GOD !
     if (!chat) {
       setchat(
         model.startChat({
@@ -55,7 +55,7 @@ const ChatArea = () => {
     try {
       const result = await chat.sendMessage(input);
       const response = await result.response;
-      const text = markdownToTxt(response.text());
+      const text = response.text();
       setLoading(false);
       setHistory((oldHistory) => {
         const newHistory = oldHistory.slice(0, oldHistory.length - 1);
@@ -125,7 +125,7 @@ const ChatArea = () => {
                 item.role === "model" ? "chat-bubble-primary" : ""
               }`}
             >
-              {item.parts}
+              <Markdown>{item.parts}</Markdown>
             </div>
           </div>
         ))}
