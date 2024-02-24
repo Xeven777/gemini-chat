@@ -2,7 +2,7 @@
 
 This project is Gemini-Pro Based AI chat bot built with Next.js 14 and TypeScript. It uses an AI model to generate responses to user input (either text or image).
 
-[!screenshot](https://imgur.com/v3eOec8.png)
+![screenshot](https://imgur.com/v3eOec8.png)
 
 ## Features
 
@@ -49,7 +49,7 @@ Follow these steps to get the project up and running:
    ```
 
 Now, you should be able to see the application running at `localhost:3000` in your web browser! ✨
-NOTE - Get your api key from here : https://aistudio.google.com/app/apikey 
+NOTE - Get your api key from here : https://aistudio.google.com/app/apikey
 
 #### You can also download the code as Zip and use it .
 
@@ -63,4 +63,4 @@ Contributions are what make the open source community such an amazing place to l
 
 ### Author
 
-(Anish biswas)[https://github.com/Xeven777/]
+[Anish biswas](https://github.com/Xeven777/)
